@@ -28,7 +28,8 @@ class MenuAdapter extends AdapterClass {
 
 	parseDateFromSortOrder(sortOrder: number): Date | null {
 		// Parse date from DDMMYYYY format (e.g., 31122025 -> Dec 31, 2025)
-		const str = sortOrder.toString();
+		// Pad with leading zeros to handle dates like 01012026 which become 1012026 as a number
+		const str = sortOrder.toString().padStart(8, '0');
 		if (str.length !== 8) return null;
 
 		const day = parseInt(str.substring(0, 2), 10);
