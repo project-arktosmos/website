@@ -180,6 +180,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>{$t.site.title}</title>
+</svelte:head>
+
 <div class="min-h-screen lg:bg-base-300">
 <div class="mx-auto flex h-screen max-w-[1200px] flex-col bg-base-100">
 	<!-- Desktop: sidebar layout -->
