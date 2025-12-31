@@ -19,12 +19,12 @@ const config = {
 			strict: false // This tells the adapter to ignore dynamic routes
 		}),
 		alias: {
-			$components: 'src/components/*',
-			$utils: 'src/utils/*',
-			$types: 'src/types/*',
-			$data: 'src/data/*',
-			$adapters: 'src/adapters/*',
-			$services: 'src/services/*'
+			$components: 'src/components',
+			$utils: 'src/utils',
+			$types: 'src/types',
+			$data: 'src/data',
+			$adapters: 'src/adapters',
+			$services: 'src/services'
 		}
 	}
 };

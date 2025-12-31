@@ -1,2 +1,18 @@
 @import 'tailwindcss';
-@plugin "daisyui";
+@plugin "daisyui" {
+	themes: coffee;
+}
+
+@theme {
+	--font-sans: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+	--font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+}
+
+.scrollbar-hidden {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+	display: none;
+}

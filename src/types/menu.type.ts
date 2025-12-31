@@ -5,4 +5,7 @@ export interface MenuEntry {
 	title: string;
 	slug: string;
 	content: string;
+	sortOrder?: number;
+	publicationDate?: Date;
+	children?: MenuEntry[];
 }

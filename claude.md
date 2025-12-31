@@ -246,3 +246,41 @@ npm run format     # Prettier
 4. **All entities need `id: ID`**: Required for service operations
 5. **Use path aliases**: Cleaner imports with `$components`, `$services`, etc.
 6. **Keep it simple**: Avoid over-engineering, no unnecessary abstractions
+
+## Git Identity Configuration
+
+**IMPORTANT**: This repository uses the Project Arktosmos identity. Always use these settings when committing or pushing.
+
+### Identity Settings (already configured locally)
+
+```bash
+# User identity
+user.name = "Project Arktosmos"
+user.email = "project.arktosmos@gmail.com"
+
+# SSH key for authentication
+core.sshCommand = "ssh -i ~/.ssh/id_ed25519_arktosmos -o IdentitiesOnly=yes"
+```
+
+### Remote
+
+```
+origin  git@github.com:project-arktosmos/website.git
+```
+
+### When Creating Commits
+
+Always verify the identity is configured before committing:
+
+```bash
+git config --local user.name   # Should show: Project Arktosmos
+git config --local user.email  # Should show: project.arktosmos@gmail.com
+```
+
+If not configured, apply these settings:
+
+```bash
+git config --local user.name "Project Arktosmos"
+git config --local user.email "project.arktosmos@gmail.com"
+git config --local core.sshCommand "ssh -i ~/.ssh/id_ed25519_arktosmos -o IdentitiesOnly=yes"
+```

@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import { cpSync, existsSync, mkdirSync, watch } from 'fs';
+import { cpSync, existsSync, mkdirSync, rmSync, watch } from 'fs';
 import { resolve } from 'path';
 
 function copyMarkdownPlugin() {
@@ -10,9 +10,10 @@ function copyMarkdownPlugin() {
 
 	function copyFiles() {
 		if (!existsSync(dataDir)) return;
-		if (!existsSync(destDir)) {
-			mkdirSync(destDir, { recursive: true });
+		if (existsSync(destDir)) {
+			rmSync(destDir, { recursive: true });
 		}
+		mkdirSync(destDir, { recursive: true });
 		cpSync(dataDir, destDir, { recursive: true });
 		console.log('[markdown-copy] Copied data files to src/data');
 	}

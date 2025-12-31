@@ -1,16 +1,25 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import { i18n, SUPPORTED_LOCALES, LOCALE_NAMES, type Locale } from '../../i18n';
 
 	export let title: string = 'Project Arktosmos';
 
 	const dispatch = createEventDispatcher();
+	const { locale } = i18n;
 
 	function handleMenuClick() {
 		dispatch('menuToggle');
 	}
+
+	function handleLocaleChange(event: Event) {
+		const select = event.target as HTMLSelectElement;
+		const newLocale = select.value as Locale;
+		i18n.setLocale(newLocale);
+		dispatch('localeChange', newLocale);
+	}
 </script>
 
-<div class="navbar bg-base-100 shadow-lg">
+<div class="navbar bg-base-200 shadow-lg">
 	<div class="flex-none lg:hidden">
 		<button
 			class="btn btn-square btn-ghost"
@@ -32,7 +41,18 @@
 			</svg>
 		</button>
 	</div>
-	<div class="flex-1">
+	<div class="flex flex-1 justify-center">
 		<span class="text-xl font-bold">{title}</span>
+	</div>
+	<div class="flex-none">
+		<select
+			class="select select-bordered select-sm"
+			value={$locale}
+			on:change={handleLocaleChange}
+		>
+			{#each SUPPORTED_LOCALES as locale}
+				<option value={locale}>{LOCALE_NAMES[locale]}</option>
+			{/each}
+		</select>
 	</div>
 </div>
