@@ -1,4 +1,4 @@
-export type Locale = 'en' | 'ca' | 'es' | 'qq';
+export type Locale = 'en' | 'ca' | 'es';
 
 export interface Translations {
 	site: {
@@ -8,11 +8,10 @@ export interface Translations {
 
 export const DEFAULT_LOCALE: Locale = 'en';
 
-export const SUPPORTED_LOCALES: Locale[] = ['en', 'ca', 'es', 'qq'];
+export const SUPPORTED_LOCALES: Locale[] = ['en', 'ca', 'es'];
 
 export const LOCALE_NAMES: Record<Locale, string> = {
 	en: 'English',
 	ca: 'Catalan',
-	es: 'Spanish',
-	qq: 'QQQQQ (Debug)'
+	es: 'Spanish'
 };

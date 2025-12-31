@@ -5,13 +5,11 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from './types';
 import en from './locales/en.json';
 import ca from './locales/ca.json';
 import es from './locales/es.json';
-import qq from './locales/qq.json';
 
 const translations: Record<Locale, Translations> = {
 	en: en as Translations,
 	ca: ca as Translations,
-	es: es as Translations,
-	qq: qq as Translations
+	es: es as Translations
 };
 
 function createI18nStore() {
