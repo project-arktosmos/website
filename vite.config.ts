@@ -2,11 +2,12 @@ import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import { cpSync, existsSync, mkdirSync, rmSync, watch } from 'fs';
-import { resolve } from 'path';
+import { resolve, basename } from 'path';
 
 function copyMarkdownPlugin() {
 	const dataDir = resolve(__dirname, 'data');
 	const destDir = resolve(__dirname, 'src/data');
+	const isCI = process.env.CI === 'true';
 
 	function copyFiles() {
 		if (!existsSync(dataDir)) return;
@@ -14,8 +15,18 @@ function copyMarkdownPlugin() {
 			rmSync(destDir, { recursive: true });
 		}
 		mkdirSync(destDir, { recursive: true });
-		cpSync(dataDir, destDir, { recursive: true });
-		console.log('[markdown-copy] Copied data files to src/data');
+		cpSync(dataDir, destDir, {
+			recursive: true,
+			filter: (src) => {
+				const filename = basename(src);
+				if (isCI && filename.startsWith('.')) {
+					console.log(`[markdown-copy] Skipping dotfile in CI: ${filename}`);
+					return false;
+				}
+				return true;
+			}
+		});
+		console.log(`[markdown-copy] Copied data files to src/data${isCI ? ' (CI mode: dotfiles excluded)' : ''}`);
 	}
 
 	return {

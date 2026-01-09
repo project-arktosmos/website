@@ -131,59 +131,82 @@ class MenuAdapter extends AdapterClass {
 	}
 
 	buildMenuTree(flatEntries: MenuEntry[]): MenuEntry[] {
-		// Separate folder entries (from index.md) and child entries
+		// Build a map of all folders (entries that have children)
 		const folderMap = new Map<string, MenuEntry>();
-		const childEntries: { entry: MenuEntry; parentSlug: string }[] = [];
 		const topLevelEntries: MenuEntry[] = [];
 
-		// First pass: identify folders and top-level items
+		// First pass: identify all folders (entries that have direct children)
 		for (const entry of flatEntries) {
-			// Check if this entry represents a folder (came from index.md)
-			const isFolder = flatEntries.some((e) => {
+			const hasChildren = flatEntries.some((e) => {
 				if (e === entry) return false;
-				return e.slug.startsWith(entry.slug + '/');
+				// Check if e is a direct child of entry
+				if (!e.slug.startsWith(entry.slug + '/')) return false;
+				const remainder = e.slug.slice(entry.slug.length + 1);
+				// Direct child has no additional slashes in remainder
+				return !remainder.includes('/');
 			});
 
-			if (isFolder || entry.slug.includes('/') === false) {
-				// This is either a folder or a top-level file
-				const hasChildren = flatEntries.some(
-					(e) => e !== entry && e.slug.startsWith(entry.slug + '/')
-				);
-				if (hasChildren) {
-					folderMap.set(entry.slug, { ...entry, children: [] });
-				} else if (!entry.slug.includes('/')) {
-					topLevelEntries.push(entry);
-				}
+			if (hasChildren) {
+				folderMap.set(entry.slug, { ...entry, children: [] });
 			}
 		}
 
-		// Second pass: assign children to folders
+		// Second pass: assign entries to their parent folders or top level
 		for (const entry of flatEntries) {
-			if (entry.slug.includes('/')) {
+			// Skip if this entry is already in folderMap (it's a folder with children)
+			if (folderMap.has(entry.slug)) continue;
+
+			if (!entry.slug.includes('/')) {
+				// Top-level entry (no slashes)
+				topLevelEntries.push(entry);
+			} else {
+				// Find the direct parent folder
 				const parts = entry.slug.split('/');
 				const parentSlug = parts.slice(0, -1).join('/');
 				const folder = folderMap.get(parentSlug);
 				if (folder && folder.children) {
 					folder.children.push(entry);
 				} else {
-					// Orphan nested entry, add to top level
+					// Orphan nested entry - should not happen with proper index.md files
 					topLevelEntries.push(entry);
 				}
 			}
 		}
 
-		// Combine folders and top-level entries
-		const result = [...topLevelEntries, ...folderMap.values()];
-
-		// Sort: numbered entries first by sortOrder, then unnumbered alphabetically
-		result.sort(this.sortEntries);
-		for (const entry of result) {
-			if (entry.children) {
-				entry.children.sort(this.sortEntries);
+		// Third pass: nest folders inside their parent folders
+		const nestedFolderSlugs = new Set<string>();
+		for (const [slug, folder] of folderMap) {
+			if (slug.includes('/')) {
+				const parts = slug.split('/');
+				const parentSlug = parts.slice(0, -1).join('/');
+				const parentFolder = folderMap.get(parentSlug);
+				if (parentFolder && parentFolder.children) {
+					parentFolder.children.push(folder);
+					nestedFolderSlugs.add(slug);
+				}
 			}
 		}
 
-		return result;
+		// Combine top-level entries and top-level folders
+		for (const [slug, folder] of folderMap) {
+			if (!nestedFolderSlugs.has(slug)) {
+				topLevelEntries.push(folder);
+			}
+		}
+
+		// Sort recursively
+		const sortRecursive = (entries: MenuEntry[]) => {
+			entries.sort(this.sortEntries);
+			for (const entry of entries) {
+				if (entry.children && entry.children.length > 0) {
+					sortRecursive(entry.children);
+				}
+			}
+		};
+
+		sortRecursive(topLevelEntries);
+
+		return topLevelEntries;
 	}
 
 	sortEntries(a: MenuEntry, b: MenuEntry): number {

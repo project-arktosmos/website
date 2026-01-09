@@ -64,7 +64,7 @@ Using footage from all the available Spider-Man films, assemble a multiversal sp
 
 This should lead to the big crossover event directly, setting up Madame Web as a champion, trying to use the sinister six to take on Kang, and being left with the 6 spider-peoples
 
-Introduces Madame Web as the Eternal Entity of Space
+
 
 ### Kang Dynasty
 The big crossover event, a true avengers-level threat. The recast Kang, probably Monica, or maybe Loki, are left at the end of time, where the spiderpeople arrive. Kang has carefully gathered her champions to fight off the threat, but doesn't know the counter-Kang has used this to also gather here the entities.

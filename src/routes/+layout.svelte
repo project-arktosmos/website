@@ -84,7 +84,22 @@
 	}
 
 	async function loadMarkdownFiles(locale: Locale) {
-		const allModules = import.meta.glob('$data/**/*.md', { query: '?raw', import: 'default' });
+		const regularModules = import.meta.glob('$data/**/*.md', { query: '?raw', import: 'default' });
+		const dotModules = import.meta.glob('$data/**/.*.md', { query: '?raw', import: 'default' });
+		const dotFolderModules = import.meta.glob('$data/**/.*/*.md', {
+			query: '?raw',
+			import: 'default'
+		});
+		const dotFilesInDotFolders = import.meta.glob('$data/**/.*/.*.md', {
+			query: '?raw',
+			import: 'default'
+		});
+		const allModules = {
+			...regularModules,
+			...dotModules,
+			...dotFolderModules,
+			...dotFilesInDotFolders
+		};
 		const entries: MenuEntry[] = [];
 		const localePrefix = `/${locale}/`;
 		const fallbackPrefix = `/${DEFAULT_LOCALE}/`;

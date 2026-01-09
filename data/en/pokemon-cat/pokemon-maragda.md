@@ -1,5 +1,7 @@
 # Pokemon Maragda
 
+![Pokemon Emerald Cover](/image/pokemon-emerald-cover.jpg "300px|badge:/image/flag-catalonia.svg")
+
 The fanmade Catalan translation for Pokemon Emerald
 
 [Github Project](https://github.com/project-arktosmos/pokemon-maragda)

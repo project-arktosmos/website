@@ -1,5 +1,6 @@
 # Roadmap
 
+What ties it all together is the Kang Prophecy, an anomally with an encrypted message sent to the universes marked for destruction after they get assimilated into the Sacred Timeline, all leading to Kang's .final plan
 
 | Entry | Summary | Source Material
 |:--|:--|:--:
@@ -13,4 +14,6 @@
 | Spider Wars | Crossover event for all Spider-Men, and the cast from Madame Web | Spider-man movies, Madame Web
 | Eternals 2 | The Eternals continue their journey to discover what happened to the Celestials, and how to halt their plans | Eternals
 | Fantastic Four: First Steps | Rewrite of the movie | FF: First Steps
+| Asguardians of the Galaxy | Mesh and fix between Guardians 3 and Thor 4 | Thor 1-4, Guardians 1-3
+| Ant-Man: Glory Days | Hank Pym puts together the original Avengers team with the best version of each of them, while the prime Ant-Man fights off an alternate universe's Avengers | Avengers 1, 2; Captain America 2, Antman 1-3
 | Kang Dynasty | Final clash between the New Avengers, the Spider Six, the X-Men, and the Fantastic 4

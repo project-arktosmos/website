@@ -108,14 +108,36 @@
 					<ul>
 						{#each entry.children ?? [] as child (child.id)}
 							{@const isChildActive = child.slug === activeSlug}
+							{@const childHasChildren = child.children && child.children.length > 0}
 							{@const childClass = classNames({
 								'bg-primary text-primary-content rounded-btn': isChildActive
 							})}
-							<li>
-								<button class={childClass} on:click={() => handleClick(child)}>
-									{child.title}
-								</button>
-							</li>
+							{#if childHasChildren}
+								<li>
+									<button class={childClass} on:click={() => handleClick(child)}>
+										{child.title}
+									</button>
+									<ul>
+										{#each child.children ?? [] as grandchild (grandchild.id)}
+											{@const isGrandchildActive = grandchild.slug === activeSlug}
+											{@const grandchildClass = classNames({
+												'bg-primary text-primary-content rounded-btn': isGrandchildActive
+											})}
+											<li>
+												<button class={grandchildClass} on:click={() => handleClick(grandchild)}>
+													{grandchild.title}
+												</button>
+											</li>
+										{/each}
+									</ul>
+								</li>
+							{:else}
+								<li>
+									<button class={childClass} on:click={() => handleClick(child)}>
+										{child.title}
+									</button>
+								</li>
+							{/if}
 						{/each}
 					</ul>
 				</li>
